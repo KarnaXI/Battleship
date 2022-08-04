@@ -23,6 +23,10 @@ playerContainer.appendChild(playerRemainingShips);
 const playerActionsText = div.cloneNode(false);
 playerActionsText.classList.add("player-actions-text");
 playerContainer.appendChild(playerActionsText);
+const playerRotateButton = document.createElement("button");
+playerRotateButton.classList.add("player-rotate-button", "rotate-buttons");
+playerRotateButton.innerText = "Rotate Ship";
+playerContainer.appendChild(playerRotateButton);
 
 const computerContainer = div.cloneNode(false);
 computerContainer.classList.add("computer-container");
@@ -38,6 +42,10 @@ computerContainer.appendChild(computerRemainingShips);
 const computerActionsText = div.cloneNode(false);
 computerActionsText.classList.add("computer-actions-text");
 computerContainer.appendChild(computerActionsText);
+const computerRotateButton = document.createElement("button");
+computerRotateButton.classList.add("computer-rotate-button", "rotate-buttons");
+computerRotateButton.innerText = "Rotate Ship";
+computerContainer.appendChild(computerRotateButton);
 
 playerComputerContainer.appendChild(playerContainer);
 playerComputerContainer.appendChild(computerContainer);

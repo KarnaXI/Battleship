@@ -34,8 +34,11 @@ const Ship = (name, length) => {
             }
         }
         else if (angle === 180){
+            let startCount = alphaCode[(row)];
             for (let i=0; i < shipBody.length; i++){
-                shipPosition.push(row + (column + i));
+                shipPosition.push(getKeyByValue(alphaCode,startCount) + (column));
+                column++;
+
             }
         }
         else {

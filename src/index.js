@@ -8,4 +8,4 @@ gameApp.appendChild(gameContainerElements()["gameContainer"]);
 
 const playerPlayGame = playerActions();
 
-playerPlayGame.playerPlaceShips();
+playerPlayGame.player.playerPlaceShips();

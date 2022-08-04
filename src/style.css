@@ -17,6 +17,7 @@ h2 {
   display: flex;
   width: 100%;
   justify-content: space-around;
+  text-align: center;
 }
 
 .game-boards-container {
@@ -55,4 +56,8 @@ h2 {
 
 .invalid-placement-hover {
   background: rgb(253, 109, 83);
+}
+
+.rotate-buttons {
+  margin: 1rem 0 2rem 0;
 }
