@@ -1,29 +1,22 @@
 import Ship from "./ships";
 
-const invalidCoordinates = ["A11", "B11", "C11", "D11", "E11", "F11", "G11", "H11", "I11", "J11", "undefined",
-"undefined1","undefined2", "undefined3", "undefined4", "undefined5","undefined6", "undefined7", "undefined8", "undefined9", "undefined10"];
-let usedSpots = [];
+let validCoordinates = [];
+let alphabet = "ABCDEFGHIJ";
+alphabet = [...alphabet];
+for (let i=0; i < alphabet.length; i++){
+    for (let n=1; n < 11; n++){
+        validCoordinates.push(alphabet[i]+n);
+    }
+}
 
-// function validatePlacement(coordinateList){
-//     let coordinatesToCheck = coordinateList;
-//     for (const coordinate of coordinatesToCheck) {
-//         if (usedSpots.includes(coordinate) || invalidCoordinates.includes(coordinate)){
-//             const canPlace = false;
-//             return [canPlace, coordinatesToCheck];
-//         }
-//         else {
-//             const canPlace = true;
-//             return [canPlace, coordinatesToCheck]
-//         }
-//     }
-// }
+let usedSpots = [];
 
 const Gameboard = () => {
 
     let missedAttacks = [];
     let sunkShips = [];
     let allAttacks = [];
-    let shipsPlaced = 4;
+    let shipsPlaced = 0;
 
     const theShips = [
         Ship('Aircraft Carrier', 5),
@@ -34,12 +27,13 @@ const Gameboard = () => {
     ] 
 
     const validatePlacement = ( index, row, column, angle) => {
+
         const shipToPlace = theShips[index];
         let badCoordinates = [];
         let canPlace = true;
         let getCoordinates = shipToPlace.placeOnBoard(row, column, angle);
         for (const coordinate of getCoordinates) {
-            if (usedSpots.includes(coordinate) || invalidCoordinates.includes(coordinate)){
+            if (usedSpots.includes(coordinate) || !validCoordinates.includes(coordinate)){
                 canPlace = false;
                 getCoordinates = shipToPlace.placeOnBoard(row, column, 0);
             }
@@ -52,6 +46,7 @@ const Gameboard = () => {
         }
 
         return [canPlace, getCoordinates, badCoordinates];
+    
     }
 
     const placeShip = (index, row, column, angle) =>{
