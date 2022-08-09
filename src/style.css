@@ -61,3 +61,7 @@ h2 {
 .rotate-buttons {
   margin: 1rem 0 2rem 0;
 }
+
+.computer-rotate-button{
+  display:none;
+}

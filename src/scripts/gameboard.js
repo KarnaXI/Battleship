@@ -9,9 +9,8 @@ for (let i=0; i < alphabet.length; i++){
     }
 }
 
-let usedSpots = [];
-
 const Gameboard = () => {
+    let usedSpots = [];
 
     let missedAttacks = [];
     let sunkShips = [];
@@ -27,7 +26,6 @@ const Gameboard = () => {
     ] 
 
     const validatePlacement = ( index, row, column, angle) => {
-
         const shipToPlace = theShips[index];
         let badCoordinates = [];
         let canPlace = true;
@@ -36,29 +34,33 @@ const Gameboard = () => {
             if (usedSpots.includes(coordinate) || !validCoordinates.includes(coordinate)){
                 canPlace = false;
                 getCoordinates = shipToPlace.placeOnBoard(row, column, 0);
+                shipToPlace.placeOnBoard(row, column, 0);
             }
 
             else {
                 badCoordinates.push(coordinate);
                 shipToPlace.placeOnBoard(row, column, 0);
             }
-
+                
         }
 
         return [canPlace, getCoordinates, badCoordinates];
-    
     }
 
-    const placeShip = (index, row, column, angle) =>{
+    const placeShip = (index, row, column, angle) => {
         const shipToPlace = theShips[index];
-        let getCoordinates = shipToPlace.placeOnBoard(row, column, angle);
-        for (const coordinate of getCoordinates) {
-                usedSpots.push(coordinate);
-            }
-            shipToPlace.createPieces();
+        let getRealCoordinates = shipToPlace.placeOnBoard(row, column, angle);
+        console.log("get real coordinates:", getRealCoordinates)
+        for (const coordinate of getRealCoordinates) {
+            // console.log(coordinate)
+            usedSpots.push(coordinate);
+        }
+        shipToPlace.createPieces();
+        console.log("placing:" , shipToPlace)
     }   
     
     const receiveAttack = (position) => {
+
         let attackMiss = 0;
 
         for (let i = 0; i < theShips.length; i++) {

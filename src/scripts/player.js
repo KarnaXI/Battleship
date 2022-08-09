@@ -1,12 +1,28 @@
 import Gameboard from "./gameboard";
+import Ship from "./ships";
 
 const Player = (name) => {
 
     const getPlayerName = () => name;
+    let enemyName = "none";
+    const getEnemyName = () => {
+        if (getPlayerName() === "player"){
+            enemyName = "computer"
+        }
+        else {
+            enemyName = "player"
+        }
+        return enemyName;
+    }
     const playerGameBoard = Gameboard();
 
     const playerBoard = document.querySelector(`.${getPlayerName()}-board-container`);
     const playerAllCoordinates = playerBoard.querySelectorAll(".coordinate");
+
+    const playerDescriptionText = document.querySelector("p.player-description-text");
+    playerDescriptionText.innerHTML = `
+    Place your ships, ships remaining: ${5-(playerGameBoard.shipsPlaced)}
+    `
 
     let theAngle = 180;
     const rotateShipButton = document.querySelector(`.${getPlayerName()}-rotate-button`);
@@ -19,12 +35,15 @@ const Player = (name) => {
         }
     });
 
+    
+   
 
     const playerPlaceShips = () => {
         playerAllCoordinates.forEach(coordinate => {
             coordinate.addEventListener('mouseover', (e) => {
                 if (playerGameBoard.shipsPlaced < 5) {
                     let eventId = e.target.id;
+                    playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), 0);
                     let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
                     if(validation[0]){
                         for (let validCoordinate of validation[1]){
@@ -46,6 +65,7 @@ const Player = (name) => {
             coordinate.addEventListener('mouseout', (e) => {
                 if (playerGameBoard.shipsPlaced < 5) {
                     let eventId = e.target.id;
+                    playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), 0);
                     if (eventId){
                     let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
 
@@ -65,7 +85,6 @@ const Player = (name) => {
 
             coordinate.addEventListener("click", (e) => {
                 if (playerGameBoard.shipsPlaced < 5) {
-
                     let eventId = e.target.id;
                     let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
                     if (validation[0]){
@@ -75,7 +94,21 @@ const Player = (name) => {
                         }
                         playerGameBoard.shipsPlaced += 1;
 
-                        console.log(playerGameBoard.shipsPlaced);
+                        if (playerGameBoard.shipsPlaced < 5) {
+                                
+                            playerDescriptionText.innerHTML = `
+                            Place your ships, ships remaining: ${5-(playerGameBoard.shipsPlaced)}
+                            `
+                        }
+                        else {
+                            playerDescriptionText.innerHTML = `
+                            Time to attack!!!`
+                            rotateShipButton.style.display = "none";
+
+
+                            return true;
+
+                        }
                     }
                 }
             });
@@ -93,10 +126,33 @@ const Player = (name) => {
         }
     }
 
+    const computerPlaceShips = () => {
+        const angles = [90, 180];
+
+        for (let i = 0; playerGameBoard.shipsPlaced < 5; i++){
+
+            const randomCoordinate = positionsAvailable[Math.floor(Math.random() * positionsAvailable.length)];
+            const randomAngle = angles[Math.floor(Math.random() * angles.length)];
+            let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
+
+            if (validation[0]){
+                console.log("Validation: ",validation)
+                playerGameBoard.placeShip(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
+                playerGameBoard.shipsPlaced += 1;
+                // console.log(playerGameBoard.theShips[i])
+                validation[1].forEach(coordinate => {
+                    const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
+                    shipCoords.style.background = "yellow";
+                })
+            }
+        
+        }
+        
+    }
+
     const computerAttack = () => {
         const random = Math.floor(Math.random() * positionsAvailable.length);
         const attackCoordinate = positionsAvailable[random];
-        playerOneGameBoard.receiveAttack(attackCoordinate);
         positionsAvailable = positionsAvailable.filter(coordinate => coordinate !== attackCoordinate);
         positionsAttacked.push(attackCoordinate);
         return attackCoordinate;
@@ -104,14 +160,14 @@ const Player = (name) => {
 
     const playerAttack = (coordinate) => {
         if (!positionsAttacked.includes(coordinate)){
-            computerGameboard.receiveAttack(coordinate);
             positionsAttacked.push(coordinate);
             return coordinate;
         }
         
     }
 
-    return {getPlayerName, playerGameBoard, computerAttack, playerAttack, positionsAvailable, positionsAttacked, playerPlaceShips}
+    return {getPlayerName, playerGameBoard, computerAttack, playerAttack, positionsAvailable,
+        positionsAttacked, playerPlaceShips, computerPlaceShips, getEnemyName}
 }
 
 
