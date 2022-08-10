@@ -31,8 +31,6 @@ const Ship = (name, length) => {
                 shipPosition.push(getKeyByValue(alphaCode,startCount) + column);
                 startCount++;
             }
-            // console.log("Name: ", getName());
-            // console.log("90: ", shipPosition);
         }
         else if (angle === 180){
             let startCount = alphaCode[(row)];
@@ -41,13 +39,9 @@ const Ship = (name, length) => {
                 column++;
 
             }
-            // console.log("Name: ", getName());
-            // console.log("180: ", shipPosition);
         }
         else {
             shipPosition = [];
-            // console.log("Name: ", getName());
-            // console.log("No ship: ", shipPosition);
         }
         return shipPosition;
     }
@@ -63,10 +57,6 @@ const Ship = (name, length) => {
 
     function isSunk(){
         let checkSunk = Object.values(shipPieces).every( value => value === "X");
-        if (checkSunk){
-            console.log(getName(), "sunk")
-            console.log("Ship position: ",shipPosition)
-        }
         return checkSunk;
     };
 

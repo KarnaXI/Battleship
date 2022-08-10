@@ -41,30 +41,19 @@ const playTheGame = () => {
     computer.computerPlaceShips;
     computerPositions.forEach(coordinate => {
         coordinate.addEventListener('click', (e) => {
-            // if(player.playerGameBoard.shipsPlaced === 5 && turn === 0){
             let coordinateAttacked = e.target.id;
-            console.log("Coordinate attacked: ",coordinateAttacked);
 
             if(turn === 0){
                 let attackResults = computer.theComputerGameboard.receiveAttack(coordinateAttacked);
 
    
                 if (attackResults){
-                    console.log("at")
                     e.target.style.background = "red";
                     console.log("attack results: ",attackResults);
 
-                    // if ((computer.theComputerGameboard.sunkShips).length > sunkShips){
-                    //     // console.log("sdsd: ", computer.computerGameboard.sunkShips);
-                    //     sunkShips += 1;
-                    //     // console.log(computer.theComputerGameboard.sunkShips);
-                     
-                    // }
                     if (attackResults.shipPosition){
                         for (let positions of attackResults.shipPosition ){
-                            // computerBoardCoordinates.querySelector(`button#${positions}`).style.background = "purple";
-                            // computerBoardCoordinates.querySelector(`button#${positions}`).style.background = "none";
-                            console.log(skullIcon.src)
+    
                             computerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
                         }
                     }
