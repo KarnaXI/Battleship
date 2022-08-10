@@ -1,6 +1,10 @@
 import Ship from "../scripts/ships";
 import Gameboard from "../scripts/gameboard";
 import Player from "../scripts/player";
+import Skull from './skull.jpg';
+
+const skullIcon = new Image();
+skullIcon.src = Skull;
 
 
 const computerActions = () => {
@@ -46,12 +50,25 @@ const playTheGame = () => {
 
    
                 if (attackResults){
+                    console.log("at")
                     e.target.style.background = "red";
-                    if ((computer.theComputerGameboard.sunkShips).length > sunkShips){
-                        // console.log("sdsd: ", computer.computerGameboard.sunkShips);
-                        sunkShips += 1;
-                        console.log(computer.theComputerGameboard.sunkShips);
+                    console.log("attack results: ",attackResults);
+
+                    // if ((computer.theComputerGameboard.sunkShips).length > sunkShips){
+                    //     // console.log("sdsd: ", computer.computerGameboard.sunkShips);
+                    //     sunkShips += 1;
+                    //     // console.log(computer.theComputerGameboard.sunkShips);
+                     
+                    // }
+                    if (attackResults.shipPosition){
+                        for (let positions of attackResults.shipPosition ){
+                            // computerBoardCoordinates.querySelector(`button#${positions}`).style.background = "purple";
+                            // computerBoardCoordinates.querySelector(`button#${positions}`).style.background = "none";
+                            console.log(skullIcon.src)
+                            computerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
+                        }
                     }
+                    
                     
                 }
                 else{

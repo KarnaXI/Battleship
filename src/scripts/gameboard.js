@@ -51,6 +51,7 @@ const Gameboard = () => {
         const shipToPlace = theShips[index];
         let getRealCoordinates = shipToPlace.placeOnBoard(row, column, angle);
         console.log("get real coordinates:", getRealCoordinates)
+        shipToPlace.shipPosition = getRealCoordinates;
         for (const coordinate of getRealCoordinates) {
             // console.log(coordinate)
             usedSpots.push(coordinate);
@@ -59,15 +60,27 @@ const Gameboard = () => {
         console.log("placing:" , shipToPlace)
     }   
     
+
+
     const receiveAttack = (position) => {
 
         let attackMiss = 0;
 
         for (let i = 0; i < theShips.length; i++) {
-            if (theShips[i].hit(position)){
-                if(theShips[i].isSunk()){
-                    sunkShips.push(theShips[i]);
-                }
+            // if (theShips[i].hit(position)){
+            //     if(theShips[i].isSunk()){
+            //         sunkShips.push(theShips[i]);
+            //         // console.log("sds",theShips[i])
+            //     }
+            //     return true, theShips[i];
+            // }
+            if (theShips[i].hit(position) && theShips[i].isSunk()){
+                sunkShips.push(theShips[i]);
+                    // console.log("sds",theShips[i])
+                
+                return true, theShips[i];
+            }
+            else if(theShips[i].hit(position)){
                 return true;
             }
             else {
