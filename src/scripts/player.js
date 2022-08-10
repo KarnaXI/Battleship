@@ -136,10 +136,8 @@ const Player = (name) => {
             let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
 
             if (validation[0]){
-                console.log("Validation: ",validation)
                 playerGameBoard.placeShip(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
                 playerGameBoard.shipsPlaced += 1;
-                // console.log(playerGameBoard.theShips[i])
                 validation[1].forEach(coordinate => {
                     const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
                     shipCoords.style.background = "yellow";
