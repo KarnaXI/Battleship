@@ -110,11 +110,9 @@ const playTheGame = () => {
     function checkGameEnded(){
         if(player.thePlayerGameBoard.sunkShips.length === 5){
             gameEnded = true;
-            console.log("game ended computer won")
         }
         else if(computer.theComputerGameboard.sunkShips.length === 5){
             gameEnded = true;
-            console.log("game ended player won")
         }
     }
         
