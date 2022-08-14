@@ -35,84 +35,89 @@ const Player = (name) => {
         }
     });
 
-    
-   
+    function playerPlaceShips() {
+        if (playerGameBoard.shipsPlaced < 5){
 
-    const playerPlaceShips = () => {
-        playerAllCoordinates.forEach(coordinate => {
-            coordinate.addEventListener('mouseover', (e) => {
-                if (playerGameBoard.shipsPlaced < 5) {
-                    let eventId = e.target.id;
-                    playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), 0);
-                    let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
-                    if(validation[0]){
-                        for (let validCoordinate of validation[1]){
-                            if(!validCoordinate.includes("undefined")){
-                                document.getElementById(validCoordinate).classList.add("valid-placement-hover");
+            playerAllCoordinates.forEach(coordinate => {
+                coordinate.addEventListener('mouseover', (e) => {
+                    if (playerGameBoard.shipsPlaced < 5) {
+                        let eventId = e.target.id;
+                        playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), 0);
+                        let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
+                        if(validation[0]){
+                            for (let validCoordinate of validation[1]){
+                                if(!validCoordinate.includes("undefined")){
+                                    document.getElementById(validCoordinate).classList.add("valid-placement-hover");
+                                }
                             }
-                        }
-                    }
-                    else {
-                        for (let badCoordinate of validation[2]){
-                            if (!badCoordinate.includes("undefined")){
-                                document.getElementById(badCoordinate).classList.add("invalid-placement-hover");
-                            }
-                        }
-                    }
-                }
-            });
-            
-            coordinate.addEventListener('mouseout', (e) => {
-                if (playerGameBoard.shipsPlaced < 5) {
-                    let eventId = e.target.id;
-                    playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), 0);
-                    if (eventId){
-                    let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
-
-                        for (let validCoordinate of validation[1]){
-                            if(!validCoordinate.includes("undefined")){
-                                document.getElementById(validCoordinate).classList.remove("valid-placement-hover");
-                            }
-                        }
-                        for (let badCoordinate of validation[2]){
-                            if (!badCoordinate.includes("undefined")){
-                                document.getElementById(badCoordinate).classList.remove("invalid-placement-hover");
-                            }
-                        }
-                    }
-                }
-            });
-
-            coordinate.addEventListener("click", (e) => {
-                if (playerGameBoard.shipsPlaced < 5) {
-                    let eventId = e.target.id;
-                    let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
-                    if (validation[0]){
-                        playerGameBoard.placeShip(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
-                        for (let validCoordinate of validation[1]){
-                                document.getElementById(validCoordinate).classList.add("ship-placed");
-                        }
-                        playerGameBoard.shipsPlaced += 1;
-
-                        if (playerGameBoard.shipsPlaced < 5) {
-                                
-                            playerDescriptionText.innerHTML = `
-                            Place your ships, ships remaining: ${5-(playerGameBoard.shipsPlaced)}
-                            `
                         }
                         else {
-                            playerDescriptionText.innerHTML = `
-                            Time to attack!!!`
-                            rotateShipButton.style.display = "none";
-
-
-                            return true;
-
+                            for (let badCoordinate of validation[2]){
+                                if (!badCoordinate.includes("undefined")){
+                                    document.getElementById(badCoordinate).classList.add("invalid-placement-hover");
+                                }
+                            }
                         }
                     }
-                }
+                });
+                
+                coordinate.addEventListener('mouseout', (e) => {
+                    if (playerGameBoard.shipsPlaced < 5) {
+                        let eventId = e.target.id;
+                        playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), 0);
+                        if (eventId){
+                        let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
+
+                            for (let validCoordinate of validation[1]){
+                                if(!validCoordinate.includes("undefined")){
+                                    document.getElementById(validCoordinate).classList.remove("valid-placement-hover");
+                                }
+                            }
+                            for (let badCoordinate of validation[2]){
+                                if (!badCoordinate.includes("undefined")){
+                                    document.getElementById(badCoordinate).classList.remove("invalid-placement-hover");
+                                }
+                            }
+                        }
+                    }
+                });
+
+                coordinate.addEventListener("click", (e) => {
+                    if (playerGameBoard.shipsPlaced < 5) {
+                        let eventId = e.target.id;
+                        let validation = playerGameBoard.validatePlacement(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
+                        if (validation[0]){
+                            playerGameBoard.placeShip(playerGameBoard.shipsPlaced, eventId[0], eventId.slice(1), theAngle);
+                            for (let validCoordinate of validation[1]){
+                                    document.getElementById(validCoordinate).classList.add("ship-placed");
+                            }
+                            playerGameBoard.shipsPlaced += 1;
+
+                            if (playerGameBoard.shipsPlaced < 5) {
+                                    
+                                playerDescriptionText.innerHTML = `
+                                Place your ships, ships remaining: ${5-(playerGameBoard.shipsPlaced)}
+                                `
+                            }
+                            else {
+                                playerDescriptionText.innerHTML = `
+                                Time to attack!!!`
+                                rotateShipButton.style.display = "none";
+
+
+                                return true;
+
+                            }
+                        }
+                        // return true;
+                    }
+
+                });
             });
-        });
+        }
+        else{
+            return true;
+        }
     };
 
     let positionsAttacked = [];
@@ -126,7 +131,7 @@ const Player = (name) => {
         }
     }
 
-    const computerPlaceShips = () => {
+    function computerPlaceShips() {
         const angles = [90, 180];
 
         for (let i = 0; playerGameBoard.shipsPlaced < 5; i++){
@@ -138,10 +143,10 @@ const Player = (name) => {
             if (validation[0]){
                 playerGameBoard.placeShip(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
                 playerGameBoard.shipsPlaced += 1;
-                validation[1].forEach(coordinate => {
-                    const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
-                    shipCoords.style.background = "yellow";
-                })
+                // validation[1].forEach(coordinate => {
+                //     const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
+                //     shipCoords.style.background = "yellow";
+                // })
             }
         
         }
@@ -152,6 +157,7 @@ const Player = (name) => {
         const random = Math.floor(Math.random() * positionsAvailable.length);
         const attackCoordinate = positionsAvailable[random];
         positionsAvailable = positionsAvailable.filter(coordinate => coordinate !== attackCoordinate);
+        console.log("positions available", positionsAvailable)
         positionsAttacked.push(attackCoordinate);
         return attackCoordinate;
     }

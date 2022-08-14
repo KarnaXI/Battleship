@@ -11,8 +11,8 @@ const computerActions = () => {
     const computer = Player("computer");
     const theComputerGameboard = computer.playerGameBoard;
     const enemy = computer.getEnemyName();
-    const computerPlaceShips = computer.computerPlaceShips();
-    const attack = computer.computerAttack();
+    const computerPlaceShips = computer.computerPlaceShips;
+    const attack = computer.computerAttack;
     return {computer, computerPlaceShips, enemy, theComputerGameboard, attack};
 }
 
@@ -20,9 +20,9 @@ const playerActions = () => {
     const player = Player("player");
     const thePlayerGameBoard = player.playerGameBoard;
     const enemy = player.getEnemyName();
-    const playerPlaceTheShips = player.playerPlaceShips();
+    const playerPlaceTheShips = player.playerPlaceShips;
     const attack = player.playerAttack();
-    return {player, playerPlaceTheShips, enemy, thePlayerGameBoard, attack};
+    return {player, enemy, playerPlaceTheShips, thePlayerGameBoard, attack};
 }
 
 let gameEnded = false;
@@ -37,40 +37,73 @@ const playTheGame = () => {
     const playerBoardCoordinates = document.querySelector(".player-board-container");
     const player = playerActions();
     const computer = computerActions();
-    player.playerPlaceTheShips;
-    computer.computerPlaceShips;
-    computerPositions.forEach(coordinate => {
-        coordinate.addEventListener('click', (e) => {
-            let coordinateAttacked = e.target.id;
 
-            if(turn === 0){
-                let attackResults = computer.theComputerGameboard.receiveAttack(coordinateAttacked);
+    function waitForPlayerPlaceShips() {
+        if(!player.playerPlaceTheShips()) {
+            window.setTimeout(waitForPlayerPlaceShips.bind(null), 500); 
+        } else {
+            computer.computerPlaceShips();
+            playerAttack();
 
-   
-                if (attackResults){
-                    e.target.style.background = "red";
-                    console.log("attack results: ",attackResults);
+        }
+    }
 
-                    if (attackResults.shipPosition){
-                        for (let positions of attackResults.shipPosition ){
+    waitForPlayerPlaceShips();
+
+    let gameEnded = false;
+
     
-                            computerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
+    function playerAttack(){
+        computerPositions.forEach(coordinate => {
+            coordinate.addEventListener('click', (e) => {
+                if (turn === 0 ){
+                    let coordinateAttacked = e.target.id;
+                    let attackResults = computer.theComputerGameboard.receiveAttack(coordinateAttacked);
+                    if (attackResults){
+                        e.target.style.background = "red";
+                        turn = 1;
+                        console.log(computerRandomAttack());
+
+                        if (attackResults.shipPosition){
+                            for (let positions of attackResults.shipPosition ){
+                                computerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
+                            }
                         }
                     }
-                    
-                    
+                    else {
+                        e.target.style.background = "grey";
+                        turn = 1;
+                        console.log(computerRandomAttack());
+                    }
                 }
-                else{
-                    e.target.style.background = "grey";
+            }) 
+        });
+    }
+
+    function computerRandomAttack(){
+        const attackPosition = computer.attack();
+        const attackResults = player.thePlayerGameBoard.receiveAttack(attackPosition);
+        if (attackResults){
+            playerBoardCoordinates.querySelector(`button#${attackPosition}`).style.background = "red";
+
+            if (attackResults.shipPosition){
+                for (let positions of attackResults.shipPosition ){
+                    playerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
                 }
             }
-
-        }) 
-    });
+            turn = 0;
+            return true;
+            }
+            else {
+                playerBoardCoordinates.querySelector(`button#${attackPosition}`).style.background = "grey";
+                turn = 0;
+                return true;
+            }
+        }
+        
+    }
     
 
-    
-}
 
 
 export default playTheGame;
