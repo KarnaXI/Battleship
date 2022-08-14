@@ -21,7 +21,7 @@ const playerActions = () => {
     const thePlayerGameBoard = player.playerGameBoard;
     const enemy = player.getEnemyName();
     const playerPlaceTheShips = player.playerPlaceShips;
-    const attack = player.playerAttack();
+    const attack = player.playerAttackCheck;
     return {player, enemy, playerPlaceTheShips, thePlayerGameBoard, attack};
 }
 
@@ -56,13 +56,15 @@ const playTheGame = () => {
     function playerAttack(){
         computerPositions.forEach(coordinate => {
             coordinate.addEventListener('click', (e) => {
-                if (turn === 0 ){
+                if (turn === 0 && !gameEnded && player.attack(coordinate)){
+                    checkGameEnded();
                     let coordinateAttacked = e.target.id;
                     let attackResults = computer.theComputerGameboard.receiveAttack(coordinateAttacked);
                     if (attackResults){
                         e.target.style.background = "red";
                         turn = 1;
-                        console.log(computerRandomAttack());
+                        checkGameEnded();
+                        computerRandomAttack();
 
                         if (attackResults.shipPosition){
                             for (let positions of attackResults.shipPosition ){
@@ -73,35 +75,50 @@ const playTheGame = () => {
                     else {
                         e.target.style.background = "grey";
                         turn = 1;
-                        console.log(computerRandomAttack());
+                        checkGameEnded();
+                        computerRandomAttack();
                     }
+                    
                 }
             }) 
         });
     }
 
     function computerRandomAttack(){
-        const attackPosition = computer.attack();
-        const attackResults = player.thePlayerGameBoard.receiveAttack(attackPosition);
-        if (attackResults){
-            playerBoardCoordinates.querySelector(`button#${attackPosition}`).style.background = "red";
+        checkGameEnded();
+        if(!gameEnded) {
+            const attackPosition = computer.attack();
+            const attackResults = player.thePlayerGameBoard.receiveAttack(attackPosition);
+            if (attackResults && !gameEnded){
+                playerBoardCoordinates.querySelector(`button#${attackPosition}`).style.background = "red";
 
-            if (attackResults.shipPosition){
-                for (let positions of attackResults.shipPosition ){
-                    playerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
+                if (attackResults.shipPosition){
+                    for (let positions of attackResults.shipPosition ){
+                        playerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
+                    }
                 }
-            }
-            turn = 0;
-            return true;
-            }
-            else {
-                playerBoardCoordinates.querySelector(`button#${attackPosition}`).style.background = "grey";
                 turn = 0;
-                return true;
+                }
+                else {
+                    playerBoardCoordinates.querySelector(`button#${attackPosition}`).style.background = "grey";
+                    turn = 0;
+                }
+                checkGameEnded();
             }
         }
-        
+
+    function checkGameEnded(){
+        if(player.thePlayerGameBoard.sunkShips.length === 5){
+            gameEnded = true;
+            console.log("game ended computer won")
+        }
+        else if(computer.theComputerGameboard.sunkShips.length === 5){
+            gameEnded = true;
+            console.log("game ended player won")
+        }
     }
+        
+}
     
 
 

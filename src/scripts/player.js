@@ -143,10 +143,11 @@ const Player = (name) => {
             if (validation[0]){
                 playerGameBoard.placeShip(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
                 playerGameBoard.shipsPlaced += 1;
-                // validation[1].forEach(coordinate => {
-                //     const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
-                //     shipCoords.style.background = "yellow";
-                // })
+                // make computer ships visible for testing
+                validation[1].forEach(coordinate => {
+                    const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
+                    shipCoords.style.background = "yellow";
+                })
             }
         
         }
@@ -157,12 +158,11 @@ const Player = (name) => {
         const random = Math.floor(Math.random() * positionsAvailable.length);
         const attackCoordinate = positionsAvailable[random];
         positionsAvailable = positionsAvailable.filter(coordinate => coordinate !== attackCoordinate);
-        console.log("positions available", positionsAvailable)
         positionsAttacked.push(attackCoordinate);
         return attackCoordinate;
     }
 
-    const playerAttack = (coordinate) => {
+    function playerAttackCheck(coordinate) {
         if (!positionsAttacked.includes(coordinate)){
             positionsAttacked.push(coordinate);
             return coordinate;
@@ -170,7 +170,7 @@ const Player = (name) => {
         
     }
 
-    return {getPlayerName, playerGameBoard, computerAttack, playerAttack, positionsAvailable,
+    return {getPlayerName, playerGameBoard, computerAttack, playerAttackCheck, positionsAvailable,
         positionsAttacked, playerPlaceShips, computerPlaceShips, getEnemyName}
 }
 
