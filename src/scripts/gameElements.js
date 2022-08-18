@@ -81,13 +81,59 @@ computerBoardContainer.innerHTML = allAvailableCoordinates.map(coordinate => {
 }).join('')
 
 
+const playerSide = div.cloneNode(false);
+playerSide.classList.add("player-side");
+
+
+
 boardsContainer.appendChild(playerBoardContainer);
 boardsContainer.appendChild(computerBoardContainer);
 
 gameContainer.appendChild(playerComputerContainer);
 gameContainer.appendChild(boardsContainer);
 
+const difficultyContainer = div.cloneNode(false);
+difficultyContainer.classList.add("difficulty-container");
+
+
+const difficultyTextContainer = div.cloneNode(false);
+difficultyContainer.classList.add("difficulty-text-container");
+
+const difficultyButtonsContainer = div.cloneNode(false);
+difficultyButtonsContainer.classList.add("difficulty-buttons-container");
+
+difficultyContainer.appendChild(difficultyTextContainer);
+difficultyContainer.appendChild(difficultyButtonsContainer);
+
+const difficultyText = document.createElement("h2");
+difficultyText.innerText = "Choose Difficulty";
+difficultyTextContainer.appendChild(difficultyText);
+
+const easyButton = document.createElement("button");
+easyButton.id = 1;
+easyButton.classList.add("difficulty-button");
+easyButton.innerText = "EASY";
+difficultyButtonsContainer.appendChild(easyButton);
+
+const mediumButton = document.createElement("button");
+mediumButton.id = 2;
+mediumButton.classList.add("difficulty-button");
+mediumButton.innerText = "MEDIUM";
+difficultyButtonsContainer.appendChild(mediumButton);
+
+const hardButton = document.createElement("button");
+hardButton.id = 3;
+hardButton.classList.add("difficulty-button");
+hardButton.innerText = "HARD";
+difficultyButtonsContainer.appendChild(hardButton);
+
+const heroicButton = document.createElement("button");
+heroicButton.id = 4;
+heroicButton.classList.add("difficulty-button");
+heroicButton.innerText = "HEROIC";
+difficultyButtonsContainer.appendChild(heroicButton);
+
 
 export function gameContainerElements(){
-    return {gameContainer}
+    return {gameContainer, difficultyContainer }
 }

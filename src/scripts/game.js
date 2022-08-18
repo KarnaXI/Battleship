@@ -6,6 +6,24 @@ import Skull from './skull.jpg';
 const skullIcon = new Image();
 skullIcon.src = Skull;
 
+function startGame(){
+    const difficultyButtons = document.querySelectorAll(".difficulty-button");
+    difficultyButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            playTheGame(button.id);
+            document.querySelector(".game-container").style.display = "block";
+            document.querySelector(".difficulty-container").style.display = "none";
+
+            return;
+        })
+        
+    });
+    
+
+    
+}
+ 
+
 
 const computerActions = () => {
     const computer = Player("computer");
@@ -29,7 +47,9 @@ let gameEnded = false;
 
 
 
-const playTheGame = () => {
+const playTheGame = (difficulty) => {
+    const gameDifficulty = difficulty;
+    
     let turn = 0;
     let sunkShips = 0;
     const computerBoardCoordinates = document.querySelector(".computer-board-container");
@@ -54,6 +74,7 @@ const playTheGame = () => {
 
     
     function playerAttack(){
+        const playerResultsBox = document.querySelector(".player-description-text");
         computerPositions.forEach(coordinate => {
             coordinate.addEventListener('click', (e) => {
                 if (turn === 0 && !gameEnded && player.attack(coordinate)){
@@ -62,21 +83,28 @@ const playTheGame = () => {
                     let attackResults = computer.theComputerGameboard.receiveAttack(coordinateAttacked);
                     if (attackResults){
                         e.target.style.background = "red";
+                        playerResultsBox.innerText = `Attack hit`;
                         turn = 1;
                         checkGameEnded();
-                        computerRandomAttack();
+                        for (let i=0; i < gameDifficulty; i++){
+                            computerRandomAttack();
+                        }
 
                         if (attackResults.shipPosition){
                             for (let positions of attackResults.shipPosition ){
                                 computerBoardCoordinates.querySelector(`button#${positions}`).style.backgroundImage = `url('${skullIcon.src}')`;
                             }
+                            playerResultsBox.innerText = `You sunk enemy ${attackResults.getName()}`;
                         }
                     }
                     else {
                         e.target.style.background = "grey";
+                        playerResultsBox.innerText = `Attack miss`;
                         turn = 1;
                         checkGameEnded();
-                        computerRandomAttack();
+                        for (let i=0; i < gameDifficulty; i++){
+                            computerRandomAttack();
+                        }
                     }
                     
                 }
@@ -121,4 +149,6 @@ const playTheGame = () => {
 
 
 
-export default playTheGame;
+export function gameEngine(){
+    return {playTheGame, startGame};
+}

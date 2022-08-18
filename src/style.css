@@ -65,3 +65,19 @@ h2 {
 .computer-rotate-button{
   display:none;
 }
+
+div#battle-ship {
+  width: 100%;
+}
+
+.difficulty-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-container {
+  display: none;
+
+}
