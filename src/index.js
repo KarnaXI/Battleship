@@ -9,8 +9,10 @@ gameApp.appendChild(gameContainerElements()["difficultyContainer"]);
 
 gameApp.appendChild(gameContainerElements()["gameContainer"]);
 
+gameApp.appendChild(gameContainerElements()["restartGameContainer"]);
 
-
-// gameEngine().playTheGame(gameEngine().getGameDifficulty());
 gameEngine().startGame();
 
+document.querySelector("button.restart-button").addEventListener("click", () => {
+    location.reload();
+})

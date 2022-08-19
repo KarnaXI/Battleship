@@ -1,12 +1,39 @@
 html {
   font-size: 62.5%;
 }
-p {
-  font-size: 1.7rem;
+
+body {
+  font-family: helvetica, sans-serif;
+  margin: 0;
 }
 
-h1 {
-    color: red;
+p {
+  font-size: 1.7rem;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+h1.title {
+  text-align: center;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding: 2rem;
+  background: #0063b5;
+  color: #fff;
+  font-size: 4rem;
+}
+@media screen and (max-width:516px) {
+  h1.title{
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width:400px) {
+  h1.title{
+    font-size: 2.4rem;
+  }
+  h2{
+    font-size:2rem !important;
+  }
 }
 
 h2 {
@@ -20,11 +47,32 @@ h2 {
   text-align: center;
 }
 
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 130px;
+}
+
+.computer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 130px;
+}
+
 .game-boards-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 4rem;
+  gap: 1rem;
   justify-items: center;
+}
+
+@media screen and (max-width:1060px){
+  .game-boards-container {
+    grid-template-columns: 1fr;
+    margin-top: 4rem;
+  }
 }
 
 .board-container {
@@ -32,6 +80,8 @@ h2 {
   grid-template-columns: repeat(10, 1fr);
   width: 100%;
   max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .board-container {
@@ -48,6 +98,14 @@ h2 {
   border: solid 1px black;
   border-radius: 1rem;
   cursor: pointer;
+  background-position: center !important;
+}
+
+@media screen and (max-width:350px) {
+  .coordinate{
+    border-radius: 0.8rem;
+    height: 32px;
+  }
 }
 
 .valid-placement-hover {
@@ -59,7 +117,20 @@ h2 {
 }
 
 .rotate-buttons {
-  margin: 1rem 0 2rem 0;
+  margin-left: 2rem;
+  font-weight: 800;
+  padding: 1rem;
+  line-height: 1;
+  color: white;
+  border: 1px solid #2977bb;
+  background: #2977bb;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.rotate-buttons:hover {
+  background: #6ab3f3;
+  border-color: #6ab3f3;
 }
 
 .computer-rotate-button{
@@ -75,9 +146,124 @@ div#battle-ship {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  top: 40%;
 }
+
+.difficulty-buttons-container {
+  width: 100%;
+  display: flex;
+  max-width: 300px;
+  justify-content: space-evenly;
+}
+
+.difficulty-button {
+  line-height: 1;
+  padding: 1rem;
+  background: none;
+  border: solid 1px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.easy {
+  background: greenyellow;
+  border-color: greenyellow;
+}
+
+.medium {
+  background: navajowhite;
+  border-color: navajowhite;
+}
+
+.hard {
+  background: orangered;
+  border-color: orangered;
+}
+
+.heroic {
+  background: gold;
+  border-color: gold;
+}
+
+.difficulty-button:hover{
+  background: black;
+  color:white;
+  border-color: black;
+}
+
 
 .game-container {
   display: none;
+}
 
+@media screen and (max-width:1052px) {
+  .game-container{
+    padding-left:1rem;
+    padding-right:1rem;
+  }
+  
+}
+.game-container {
+  display: none;
+}
+
+.player-side {
+  width: 100%;
+}
+
+.computer-side {
+  width: 100%;
+}
+
+.player-row-items {
+  display: flex;
+  align-items: center;
+}
+
+.player-description-text {
+  padding: 1rem;
+  background: black;
+  color: white;
+}
+
+@media screen and (max-width:455px) {
+  p.player-description-text {
+    margin-bottom: 1rem;
+  }
+}
+
+.computer-description-text {
+  padding: 1rem;
+  background: black;
+  color: white;
+}
+
+
+.restart-game-container {
+  margin-top: 4rem;
+  text-align: center;
+  display: none;
+}
+
+button.restart-button {
+  border: 1px solid orange;
+  background: orange;
+  line-height: 1;
+  padding: 1rem;
+  font-weight: 800;
+  color: #fff;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  margin-bottom: 2rem;;
+}
+
+button.restart-button:hover {
+  background: #ffc964;
+  border-color: #ffc964;
+}
+
+button{
+  border-radius: 0.3rem;
 }

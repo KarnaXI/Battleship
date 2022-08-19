@@ -132,6 +132,7 @@ const Player = (name) => {
     }
 
     function computerPlaceShips() {
+        document.querySelector(".computer-description-text").innerText = "Computer placed ships"
         const angles = [90, 180];
 
         for (let i = 0; playerGameBoard.shipsPlaced < 5; i++){
@@ -144,10 +145,10 @@ const Player = (name) => {
                 playerGameBoard.placeShip(playerGameBoard.shipsPlaced, randomCoordinate[0], randomCoordinate.slice(1), randomAngle);
                 playerGameBoard.shipsPlaced += 1;
                 // make computer ships visible for testing
-                validation[1].forEach(coordinate => {
-                    const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
-                    shipCoords.style.background = "yellow";
-                })
+                // validation[1].forEach(coordinate => {
+                //     const shipCoords = playerBoard.querySelector(`button#${coordinate}`);
+                //     shipCoords.style.background = "yellow";
+                // })
             }
         
         }

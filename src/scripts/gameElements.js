@@ -12,43 +12,32 @@ boardsContainer.classList.add("game-boards-container");
 const playerContainer = div.cloneNode(false);
 playerContainer.classList.add("player-container");
 const playerName = document.createElement("h2");
-playerName.innerText = "Player"
+playerName.innerText = "Player Status"
 playerContainer.appendChild(playerName);
+const playerRowItems = div.cloneNode(false);
+playerRowItems.classList.add("player-row-items");
 const playerDescriptionText = document.createElement("p");
 playerDescriptionText.classList.add("player-description-text");
-playerContainer.appendChild(playerDescriptionText);
-const playerRemainingShips = div.cloneNode(false);
-playerRemainingShips.classList.add("player-remaining-ships");
-playerContainer.appendChild(playerRemainingShips);
-const playerActionsText = div.cloneNode(false);
-playerActionsText.classList.add("player-actions-text");
-playerContainer.appendChild(playerActionsText);
+playerRowItems.appendChild(playerDescriptionText);
 const playerRotateButton = document.createElement("button");
 playerRotateButton.classList.add("player-rotate-button", "rotate-buttons");
-playerRotateButton.innerText = "Rotate Ship";
-playerContainer.appendChild(playerRotateButton);
+playerRotateButton.innerText = "ROTATE SHIP";
+playerRowItems.appendChild(playerRotateButton);
+playerContainer.appendChild(playerRowItems);
 
 const computerContainer = div.cloneNode(false);
 computerContainer.classList.add("computer-container");
 const computerName = document.createElement("h2");
-computerName.innerText = "Computer"
+computerName.innerText = "Computer Status"
 computerContainer.appendChild(computerName);
 const computerDescriptionText = document.createElement("p");
 computerDescriptionText.classList.add("computer-description-text");
+computerDescriptionText.innerText = "Placing ships";
 computerContainer.appendChild(computerDescriptionText);
-const computerRemainingShips = div.cloneNode(false);
-computerRemainingShips.classList.add("computer-remaining-ships");
-computerContainer.appendChild(computerRemainingShips);
-const computerActionsText = div.cloneNode(false);
-computerActionsText.classList.add("computer-actions-text");
-computerContainer.appendChild(computerActionsText);
 const computerRotateButton = document.createElement("button");
 computerRotateButton.classList.add("computer-rotate-button", "rotate-buttons");
-computerRotateButton.innerText = "Rotate Ship";
+computerRotateButton.innerText = "ROTATE SHIP";
 computerContainer.appendChild(computerRotateButton);
-
-playerComputerContainer.appendChild(playerContainer);
-playerComputerContainer.appendChild(computerContainer);
 
 
 const playerBoardContainer = div.cloneNode(false);
@@ -83,11 +72,17 @@ computerBoardContainer.innerHTML = allAvailableCoordinates.map(coordinate => {
 
 const playerSide = div.cloneNode(false);
 playerSide.classList.add("player-side");
+playerSide.appendChild(playerContainer);
+playerSide.appendChild(playerBoardContainer);
 
+boardsContainer.appendChild(playerSide);
 
+const computerSide = div.cloneNode(false);
+computerSide.classList.add("computer-side");
+computerSide.appendChild(computerContainer);
+computerSide.appendChild(computerBoardContainer);
 
-boardsContainer.appendChild(playerBoardContainer);
-boardsContainer.appendChild(computerBoardContainer);
+boardsContainer.appendChild(computerSide);
 
 gameContainer.appendChild(playerComputerContainer);
 gameContainer.appendChild(boardsContainer);
@@ -111,29 +106,36 @@ difficultyTextContainer.appendChild(difficultyText);
 
 const easyButton = document.createElement("button");
 easyButton.id = 1;
-easyButton.classList.add("difficulty-button");
+easyButton.classList.add("difficulty-button", "easy");
 easyButton.innerText = "EASY";
 difficultyButtonsContainer.appendChild(easyButton);
 
 const mediumButton = document.createElement("button");
 mediumButton.id = 2;
-mediumButton.classList.add("difficulty-button");
+mediumButton.classList.add("difficulty-button", "medium");
 mediumButton.innerText = "MEDIUM";
 difficultyButtonsContainer.appendChild(mediumButton);
 
 const hardButton = document.createElement("button");
 hardButton.id = 3;
-hardButton.classList.add("difficulty-button");
+hardButton.classList.add("difficulty-button", "hard");
 hardButton.innerText = "HARD";
 difficultyButtonsContainer.appendChild(hardButton);
 
 const heroicButton = document.createElement("button");
 heroicButton.id = 4;
-heroicButton.classList.add("difficulty-button");
+heroicButton.classList.add("difficulty-button", "heroic");
 heroicButton.innerText = "HEROIC";
 difficultyButtonsContainer.appendChild(heroicButton);
 
+const restartGameContainer = div.cloneNode(false);
+restartGameContainer.classList.add("restart-game-container");
+const restartButton = document.createElement("button");
+restartButton.innerText = "RESTART GAME";
+restartButton.classList.add("restart-button");
+restartGameContainer.appendChild(restartButton);
+
 
 export function gameContainerElements(){
-    return {gameContainer, difficultyContainer }
+    return {gameContainer, difficultyContainer, restartGameContainer}
 }
