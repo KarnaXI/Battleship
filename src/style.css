@@ -17,7 +17,7 @@ h1.title {
   text-align: center;
   margin-block-start: 0;
   margin-block-end: 0;
-  padding: 2rem;
+  padding: 4rem 0;
   background: #0063b5;
   color: #fff;
   font-size: 4rem;
@@ -71,7 +71,7 @@ h2 {
 @media screen and (max-width:1060px){
   .game-boards-container {
     grid-template-columns: 1fr;
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
 }
 
@@ -205,9 +205,14 @@ div#battle-ship {
   }
   
 }
-.game-container {
-  display: none;
+
+@media screen and (min-width:1065px) {
+  .game-container{
+    margin-top: 4rem;
+  }
+  
 }
+
 
 .player-side {
   width: 100%;

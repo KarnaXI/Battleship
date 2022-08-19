@@ -101,7 +101,7 @@ difficultyContainer.appendChild(difficultyTextContainer);
 difficultyContainer.appendChild(difficultyButtonsContainer);
 
 const difficultyText = document.createElement("h2");
-difficultyText.innerText = "Choose Difficulty";
+difficultyText.innerText = "Welcome, Choose Difficulty to Begin";
 difficultyTextContainer.appendChild(difficultyText);
 
 const easyButton = document.createElement("button");

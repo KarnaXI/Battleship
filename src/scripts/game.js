@@ -88,7 +88,6 @@ const playTheGame = (difficulty) => {
                         playerResultsBox.innerText = `Attack hit ${coordinateAttacked}`;
                         playerResultsBox.style.background = "Green";
                         turn = 1;
-                        // checkGameEnded();
 
                         if (attackResults.shipPosition){
                             for (let positions of attackResults.shipPosition ){
@@ -103,7 +102,6 @@ const playTheGame = (difficulty) => {
                         playerResultsBox.innerText = `Attack miss`;
                         playerResultsBox.style.background = "cornflowerblue";
                         turn = 1;
-                        // checkGameEnded();
                     }
                     checkGameEnded();
                     computerRunAttack();
@@ -147,8 +145,6 @@ const playTheGame = (difficulty) => {
     }
 
     function computerRunAttack(){
-        
-            
         let successfulAttacks = [];
         let anySunkenShip = [];
         for (let i=0; i < gameDifficulty; i++){
@@ -193,7 +189,7 @@ const playTheGame = (difficulty) => {
             computerResultsBox.style.fontWeight = 700;
             playerResultsBox.style.fontWeight = 700;
             computerResultsBox.innerText = "Game Ended Player Won";
-            computerResultsBox.style.background = "red";
+            computerResultsBox.style.background = "#d33d02";
             playerResultsBox.innerText = "You Win!!!";
             playerResultsBox.style.background = "gold";
             playerResultsBox.style.color = "black";
